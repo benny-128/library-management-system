@@ -15,7 +15,7 @@ app.use(
   session({
     secret: "library_secret_key",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false   // better for production
   })
 );
 
@@ -24,6 +24,11 @@ app.use(
 ========================= */
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+/* =========================
+   STATIC FILES (optional)
+========================= */
+app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
    ROUTES IMPORT
@@ -51,6 +56,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const { role, username, password } = req.body;
 
+  // ADMIN LOGIN
   if (role === "admin") {
     db.query(
       "SELECT * FROM admin WHERE username=? AND password=?",
@@ -71,6 +77,7 @@ app.post("/login", (req, res) => {
     );
   }
 
+  // STUDENT LOGIN
   else if (role === "student") {
     db.query(
       "SELECT * FROM students WHERE roll_no=? AND password=?",
@@ -157,9 +164,9 @@ app.use("/admin", adminRoutes);
 app.use("/student", studentRoutes);
 
 /* =========================
-   SERVER START
+   SERVER START (RENDER FIX)
 ========================= */
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
