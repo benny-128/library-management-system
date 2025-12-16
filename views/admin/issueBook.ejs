@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Issue Book</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <%- include("admin-style") %>
+</head>
+
+<body>
+
+<div class="container mt-5">
+  <h3 class="page-title">Issue Book</h3>
+
+  <div class="content-card col-md-6">
+    <form action="/admin/issue-book" method="post">
+      <select name="student_id" class="form-control mb-3" required>
+        <option value="">Select Student</option>
+        <% students.forEach(s => { %>
+          <option value="<%= s.id %>"><%= s.roll_no %> - <%= s.name %></option>
+        <% }) %>
+      </select>
+
+      <select name="book_id" class="form-control mb-3" required>
+        <option value="">Select Book</option>
+        <% books.forEach(b => { %>
+          <option value="<%= b.id %>"><%= b.book_name %></option>
+        <% }) %>
+      </select>
+
+      <button class="btn btn-success w-100">Issue Book</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

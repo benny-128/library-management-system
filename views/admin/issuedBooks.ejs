@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Issued Books</title>
+  <link href="https://cdn.jsdelivr.net/npmbootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <%- include("admin-style") %>
+</head>
+
+<body>
+
+<div class="container mt-5">
+  <h3 class="page-title">Issued Books</h3>
+
+  <div class="content-card">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Student</th>
+          <th>Book</th>
+          <th>Issue Date</th>
+          <th>Due Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% records.forEach(r => { %>
+          <tr>
+            <td><%= r.roll_no %> - <%= r.name %></td>
+            <td><%= r.book_name %></td>
+            <td><%= r.issue_date %></td>
+            <td><%= r.due_date %></td>
+            <td>
+              <a
+                href="/admin/return-book/<%= r.id %>"
+                class="btn btn-warning btn-sm"
+                onclick="return confirm('Mark this book as returned?')">
+                Return
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
